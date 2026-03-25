@@ -1,13 +1,13 @@
 """
-Recommendation engine combining:
-  1. Content-Based Filtering  — cosine similarity on audio features
-  2. Collaborative Filtering  — user-item matrix factorisation (SVD via numpy)
-  3. Hybrid blend            — weighted combination of both scores
+Recommendation engine using both a 
+  - Content-Based Filtering through a cosine similarity on audio features
+  - Collaborative Filtering using a user-item matrix factorisation (SVD via numpy)
 """
 
 import numpy as np
 from app.models.db import get_db
 
+""" Audio features have been chosen based off of spotify recommendation values """
 
 AUDIO_FEATURES = ["tempo", "danceability", "energy", "valence", "loudness", "speechiness"]
 
@@ -15,7 +15,7 @@ AUDIO_FEATURES = ["tempo", "danceability", "energy", "valence", "loudness", "spe
 # ─── helpers ──────────────────────────────────────────────────────────────────
 
 def _normalise(matrix: np.ndarray) -> np.ndarray:
-    """Min-max normalise each column so features are on the same scale."""
+    """normalise every column so features are on the same scale on a scale of 0 to 1"""
     mins = matrix.min(axis=0)
     maxs = matrix.max(axis=0)
     ranges = np.where((maxs - mins) == 0, 1, maxs - mins)
