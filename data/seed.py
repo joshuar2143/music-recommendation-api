@@ -3,7 +3,7 @@ import random
 import os
 
 random.seed(42)
-
+p
 SONGS = [  # (title, artist, genre, tempo, danceability, energy, valence, loudness, speechiness)
     # Radiohead
     ("Creep", "Radiohead", "Alt-Rock", 92, 0.45, 0.82, 0.22, -7.8, 0.05),
@@ -66,6 +66,19 @@ SONGS = [  # (title, artist, genre, tempo, danceability, energy, valence, loudne
     ("Electioneering", "Radiohead", "Alt-Rock", 144, 0.52, 0.90, 0.42, -5.8, 0.05),
     ("Fitter Happier", "Radiohead", "Art-Rock", 72, 0.18, 0.30, 0.08, -13.0, 0.12),
     ("The Tourist", "Radiohead", "Alt-Rock", 76, 0.38, 0.55, 0.28, -9.5, 0.03),
+
+    ("Accompanied a Blazing Solo", "Cities Aviv", "Experimental-Rap", 60, 0.4, 0.4, 0.5, -2, 0.10),
+    ("GUM", "Cities Aviv", "Experimental-Rap", 58, 0.38, 0.38, 0.45, -3, 0.12),
+    ("Immortal Flame", "Cities Aviv", "Experimental-Rap", 62, 0.42, 0.42, 0.48, -2, 0.09),
+    ("Man Plays the Horn", "Cities Aviv", "Experimental-Rap", 65, 0.45, 0.50, 0.55, -1, 0.08),
+    ("Ways of the World", "Cities Aviv", "Experimental-Rap", 63, 0.43, 0.45, 0.50, -2, 0.10),
+    ("NOT THAT I'M ANYWHERE", "Cities Aviv", "Experimental-Rap", 70, 0.55, 0.55, 0.52, -1, 0.07),
+    ("If I Could Hold Your Soul", "Cities Aviv", "Experimental-Rap", 57, 0.36, 0.35, 0.42, -4, 0.14),
+    ("ESCORTS", "Cities Aviv", "Experimental-Rap", 72, 0.58, 0.58, 0.54, -1, 0.06),
+    ("ETA", "Cities Aviv", "Experimental-Rap", 68, 0.50, 0.52, 0.50, -2, 0.08),
+    ("Black Pleasure", "Cities Aviv", "Experimental-Rap", 75, 0.62, 0.60, 0.58, -1, 0.06),
+    ("Digital Lows", "Cities Aviv", "Experimental-Rap", 78, 0.65, 0.63, 0.60, -1, 0.05),
+    ("Come to Life", "Cities Aviv", "Experimental-Rap", 73, 0.60, 0.58, 0.56, -1, 0.07),
 
     # Mogwai
     ("Mogwai Fear Satan", "Mogwai", "Post-Rock", 88, 0.30, 0.88, 0.22, -5.8, 0.02),
