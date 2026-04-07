@@ -1,0 +1,55 @@
+<div class="rounded-3xl border border-cyan-600/40 bg-gradient-to-br from-cyan-950/50 to-slate-900/50 shadow-sm overflow-hidden">
+  <div class="flex flex-col gap-4 border-b border-cyan-600/30 bg-gradient-to-r from-slate-900/50 to-cyan-900/20 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-sm text-cyan-300">
+        <span class="font-semibold text-cyan-200">{{ songs|length }}</span> songs shown of {{ total }}
+        {% if search %}· filtered by "{{ search }}"{% endif %}
+        · sorted by {{ sort_by }} {{ sort_dir|upper }}
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2 text-sm text-cyan-300">
+      {% if page > 1 %}
+      <button hx-get="/api/v1/songs/ui/fragment?genre={{ genre|urlencode }}&search={{ search|urlencode }}&sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&page={{ page - 1 }}" hx-target="#song-table" hx-swap="innerHTML" class="rounded-2xl border border-cyan-600/60 bg-cyan-950/30 px-4 py-2 transition hover:bg-cyan-900/50 hover:shadow-lg hover:shadow-cyan-600/30">← Previous</button>
+      {% else %}
+      <button disabled class="rounded-2xl border border-slate-700 bg-slate-800/20 px-4 py-2 text-slate-500 cursor-not-allowed">← Previous</button>
+      {% endif %}
+
+      {% if songs|length == per_page and (page * per_page) < total %}
+      <button hx-get="/api/v1/songs/ui/fragment?genre={{ genre|urlencode }}&search={{ search|urlencode }}&sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&page={{ page + 1 }}" hx-target="#song-table" hx-swap="innerHTML" class="rounded-2xl border border-cyan-600/60 bg-gradient-to-r from-cyan-700/40 to-teal-700/40 px-4 py-2 text-cyan-200 transition hover:from-cyan-600/50 hover:to-teal-600/50 hover:shadow-lg hover:shadow-cyan-600/30">Next →</button>
+      {% else %}
+      <button disabled class="rounded-2xl border border-slate-700 bg-slate-800/20 px-4 py-2 text-slate-500 cursor-not-allowed">Next →</button>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-cyan-600/20 text-sm text-slate-200">
+      <thead class="bg-gradient-to-r from-cyan-900/40 to-teal-900/30 text-left text-xs uppercase tracking-[0.16em] text-cyan-300 font-semibold">
+        <tr>
+          <th class="px-4 py-3">ID</th>
+          <th class="px-4 py-3">Title</th>
+          <th class="px-4 py-3">Artist</th>
+          <th class="px-4 py-3">Genre</th>
+          <th class="px-4 py-3">Tempo</th>
+          <th class="px-4 py-3">Dance</th>
+          <th class="px-4 py-3">Energy</th>
+          <th class="px-4 py-3">Vibe</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-cyan-600/10 bg-gradient-to-b from-slate-900/40 to-slate-950/60">
+        {% for song in songs %}
+        <tr class="hover:bg-cyan-900/20 transition">
+          <td class="px-4 py-3 font-bold text-cyan-400">{{ song.id }}</td>
+          <td class="px-4 py-3 text-slate-100">{{ song.title }}</td>
+          <td class="px-4 py-3 text-slate-300">{{ song.artist }}</td>
+          <td class="px-4 py-3 text-amber-300">{{ song.genre }}</td>
+          <td class="px-4 py-3 text-teal-300">{{ song.tempo }}</td>
+          <td class="px-4 py-3 text-violet-300">{{ (song.danceability * 100)|int }}%</td>
+          <td class="px-4 py-3 text-rose-300">{{ (song.energy * 100)|int }}%</td>
+          <td class="px-4 py-3 text-purple-300">{{ (song.valence * 100)|int }}%</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

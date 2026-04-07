@@ -6,6 +6,7 @@ Recommendation engine using both a
 
 import numpy as np
 from app.models.db import get_db
+from typing import Optional
 
 """ Audio features have been chosen based off of spotify recommendation values """
 
@@ -129,7 +130,7 @@ def collaborative_scores(user_id: str, conn, top_n: int = 20) -> list[dict]:
 
 def hybrid_recommend(
     user_id: str,
-    seed_song_id: int | None = None,
+    seed_song_id: Optional[int] = None,
     top_n: int = 10,
     alpha: float = 0.5,          # weight for collaborative score
 ) -> list[dict]:

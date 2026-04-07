@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Music API{% endblock %}
+
+{% block content %}
+<div class="grid gap-6 lg:grid-cols-3">
+  <div class="overflow-hidden rounded-3xl border border-cyan-600/40 bg-gradient-to-br from-cyan-900/30 to-slate-900/50 p-6 shadow-lg shadow-cyan-900/20 hover:shadow-cyan-600/30 transition">
+    <p class="text-sm uppercase tracking-[0.32em] text-cyan-400">Songs</p>
+    <p class="mt-4 text-4xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-300 bg-clip-text text-transparent">{{ total_songs }}</p>
+    <p class="mt-2 text-slate-300">Total songs available in the database.</p>
+  </div>
+  <div class="overflow-hidden rounded-3xl border border-violet-600/40 bg-gradient-to-br from-violet-900/30 to-slate-900/50 p-6 shadow-lg shadow-violet-900/20 hover:shadow-violet-600/30 transition">
+    <p class="text-sm uppercase tracking-[0.32em] text-violet-400">Users</p>
+    <p class="mt-4 text-4xl font-bold bg-gradient-to-r from-violet-400 to-violet-300 bg-clip-text text-transparent">{{ total_users }}</p>
+    <p class="mt-2 text-slate-300">Total users tracked in interactions.</p>
+  </div>
+  <div class="overflow-hidden rounded-3xl border border-rose-600/40 bg-gradient-to-br from-rose-900/30 to-slate-900/50 p-6 shadow-lg shadow-rose-900/20 hover:shadow-rose-600/30 transition">
+    <p class="text-sm uppercase tracking-[0.32em] text-rose-400">Genres</p>
+    <p class="mt-4 text-4xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent">{{ genres|length }}</p>
+    <p class="mt-2 text-slate-300">Distinct music genres in the catalog.</p>
+  </div>
+</div>
+
+<section class="mt-8 rounded-3xl border border-purple-600/30 bg-gradient-to-br from-purple-900/20 to-slate-900/30 p-6 shadow-lg shadow-purple-900/20">
+  <h2 class="text-xl font-semibold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Genre breakdown</h2>
+  <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+    {% for genre in genres %}
+    <div class="rounded-3xl border border-amber-600/40 bg-gradient-to-br from-amber-900/30 to-slate-900/50 p-4 hover:shadow-lg hover:shadow-amber-600/30 transition">
+      <p class="text-sm text-amber-400 font-medium">{{ genre.genre }}</p>
+      <p class="mt-2 text-2xl font-bold text-amber-200">{{ genre.count }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -2,8 +2,8 @@ import sqlite3
 import random
 import os
 
-random.seed(42)
-p
+random.seed(42) # HGTTG
+
 SONGS = [  # (title, artist, genre, tempo, danceability, energy, valence, loudness, speechiness)
     # Radiohead
     ("Creep", "Radiohead", "Alt-Rock", 92, 0.45, 0.82, 0.22, -7.8, 0.05),
@@ -256,12 +256,18 @@ SONGS = [  # (title, artist, genre, tempo, danceability, energy, valence, loudne
     ("Bone Machine", "Pixies", "Alt-Rock", 148, 0.50, 0.88, 0.45, -5.8, 0.06),
 ]
 
-USERS = [f"user_{i:03d}" for i in range(1, 51)]
 
+# Make names more fun by combining random adjectives and animals
+ADJECTIVES = ["Neon", "Spicy", "Cosmic", "Groovy", "Electric", "Chill", "Phonk", "Evan", "DiddyBlud"]
+NOUNS = ["Panda", "Falcon", "Tiger", "Otter", "Capybara", "Wolf", "Table", "Mango", "Burger", "Mustard"]
+USERS = [f"user_{i:03}" for i in range(1, 201)]
+
+# join database with app directory, in case we run this from a different location
 DB_PATH = os.path.join(os.path.dirname(__file__), "music.db")
 
 
 def seed():
+    # create and connect to the SQLite database created
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
@@ -321,13 +327,13 @@ def seed():
     ).fetchone()[0]
 
     for user in USERS:
-        listened = random.sample(song_ids, k=random.randint(5, 20))
-        listened.append(little_god_id)
+        listened = random.sample(song_ids, k=random.randint(50, 200))
+        #listened.append(little_god_id)
         for song_id in listened:
             c.execute("""
                 INSERT OR IGNORE INTO interactions (user_id, song_id, play_count, liked)
                 VALUES (?, ?, ?, ?)
-            """, (user, song_id, random.randint(1, 30), random.randint(0, 1)))
+            """, (user, song_id, random.randint(1, 100), random.randint(0, 1)))
 
     conn.commit()
     conn.close()

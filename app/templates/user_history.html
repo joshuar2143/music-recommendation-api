@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}User {{ user_id }} History — Music API{% endblock %}
+
+{% block content %}
+<div class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+  <section class="overflow-hidden rounded-3xl border border-rose-600/40 bg-gradient-to-br from-rose-900/20 to-slate-900/40 p-6 shadow-lg shadow-rose-900/30">
+    <div class="flex flex-col gap-2">
+      <p class="text-sm uppercase tracking-[0.32em] text-rose-400 font-semibold">Listening history</p>
+      <h1 class="text-3xl font-bold bg-gradient-to-r from-rose-300 to-pink-300 bg-clip-text text-transparent">User {{ user_id }}</h1>
+      <p class="text-slate-300">Recent track interactions and liked songs.</p>
+      {% if status == 'saved' %}
+      <div class="rounded-3xl border border-emerald-500/60 bg-gradient-to-r from-emerald-900/40 to-teal-900/30 px-4 py-3 text-sm text-emerald-200 font-medium mt-3 shadow-lg shadow-emerald-600/20">✅ Play recorded successfully!</div>
+      {% endif %}
+    </div>
+
+    <div class="mt-6 overflow-x-auto">
+      <table class="min-w-full divide-y divide-rose-600/20 text-sm text-slate-200">
+        <thead class="bg-gradient-to-r from-rose-900/40 to-pink-900/30 text-left text-xs uppercase tracking-[0.16em] text-rose-300 font-semibold">
+          <tr>
+            <th class="px-4 py-3">Title</th>
+            <th class="px-4 py-3">Artist</th>
+            <th class="px-4 py-3">Plays</th>
+            <th class="px-4 py-3">Liked</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-rose-600/10 bg-gradient-to-b from-slate-900/40 to-slate-950/60">
+          {% for item in history %}
+          <tr class="hover:bg-rose-900/20 transition">
+            <td class="px-4 py-3 font-medium text-slate-100">{{ item.title }}</td>
+            <td class="px-4 py-3 text-rose-300">{{ item.artist }}</td>
+            <td class="px-4 py-3 text-teal-300 font-semibold">{{ item.play_count }}×</td>
+            <td class="px-4 py-3">{% if item.liked %}<span class="text-rose-400 font-bold">❤ Yes</span>{% else %}<span class="text-slate-500">—</span>{% endif %}</td>
+          </tr>
+          {% endfor %}
+          {% if history|length == 0 %}
+          <tr>
+            <td colspan="4" class="px-4 py-6 text-center text-slate-500">🎵 No listening history yet. Start playing music!</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="rounded-3xl border border-purple-600/40 bg-gradient-to-br from-purple-900/20 to-slate-900/40 p-6 shadow-lg shadow-purple-900/30">
+    <p class="text-sm uppercase tracking-[0.32em] text-purple-400 font-semibold">Record interaction</p>
+    <h2 class="mt-3 text-2xl font-bold bg-gradient-to-r from-purple-300 to-violet-300 bg-clip-text text-transparent">Add a play</h2>
+    <form action="/api/v1/users/{{ user_id }}/interactions/ui" method="post" class="mt-6 space-y-4">
+      <div>
+        <label class="mb-2 block text-sm font-medium text-purple-300" for="song_id">Song ID</label>
+        <input id="song_id" name="song_id" type="number" required class="w-full rounded-2xl border border-purple-600/60 bg-purple-950/40 px-4 py-3 text-purple-100 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50" />
+      </div>
+      <div class="flex items-center gap-3">
+        <input id="liked" name="liked" type="checkbox" class="h-4 w-4 rounded border-rose-600 bg-rose-950/50 text-rose-500 focus:ring-rose-500 cursor-pointer" />
+        <label for="liked" class="text-sm text-slate-300 cursor-pointer">Mark as liked ❤</label>
+      </div>
+      <button type="submit" class="inline-flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-purple-600 to-rose-600 px-5 py-3 text-sm font-semibold text-white transition hover:from-purple-500 hover:to-rose-500 shadow-lg shadow-purple-600/30 hover:shadow-rose-500/50">Save interaction</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

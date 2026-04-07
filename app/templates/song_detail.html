@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ song.title }} — Music API{% endblock %}
+
+{% block content %}
+<div class="rounded-3xl border border-teal-600/40 bg-gradient-to-br from-teal-900/20 to-slate-900/40 p-6 shadow-lg shadow-teal-900/30">
+  <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+    <div>
+      <p class="text-sm uppercase tracking-[0.32em] text-teal-400 font-semibold">Song detail</p>
+      <h1 class="mt-3 text-4xl font-bold bg-gradient-to-r from-teal-300 to-cyan-300 bg-clip-text text-transparent">{{ song.title }}</h1>
+      <p class="mt-2 text-slate-300"><span class="text-teal-300 font-medium">{{ song.artist }}</span> · <span class="text-amber-300">{{ song.genre }}</span></p>
+    </div>
+    <div class="rounded-3xl bg-gradient-to-br from-emerald-900/40 to-teal-900/30 border border-emerald-600/40 px-5 py-4 text-right shadow-lg shadow-emerald-600/20">
+      <p class="text-sm uppercase tracking-[0.32em] text-emerald-400 font-semibold">Play count</p>
+      <p class="mt-2 text-3xl font-bold text-emerald-300">{{ song.play_count }}</p>
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="rounded-3xl border border-teal-600/40 bg-gradient-to-br from-teal-900/30 to-slate-900/50 p-5 hover:shadow-lg hover:shadow-teal-600/30 transition">
+      <p class="text-sm text-teal-400 font-semibold">Tempo</p>
+      <p class="mt-3 text-2xl font-bold text-teal-200">{{ song.tempo }} BPM</p>
+    </div>
+    <div class="rounded-3xl border border-violet-600/40 bg-gradient-to-br from-violet-900/30 to-slate-900/50 p-5 hover:shadow-lg hover:shadow-violet-600/30 transition">
+      <p class="text-sm text-violet-400 font-semibold">Dance</p>
+      <p class="mt-3 text-2xl font-bold text-violet-200">{{ (song.danceability * 100)|int }}%</p>
+    </div>
+    <div class="rounded-3xl border border-rose-600/40 bg-gradient-to-br from-rose-900/30 to-slate-900/50 p-5 hover:shadow-lg hover:shadow-rose-600/30 transition">
+      <p class="text-sm text-rose-400 font-semibold">Energy</p>
+      <p class="mt-3 text-2xl font-bold text-rose-200">{{ (song.energy * 100)|int }}%</p>
+    </div>
+    <div class="rounded-3xl border border-yellow-600/40 bg-gradient-to-br from-yellow-900/30 to-slate-900/50 p-5 hover:shadow-lg hover:shadow-yellow-600/30 transition">
+      <p class="text-sm text-yellow-400 font-semibold">Vibe</p>
+      <p class="mt-3 text-2xl font-bold text-yellow-200">{{ (song.valence * 100)|int }}%</p>
+    </div>
+  </div>
+</div>
+
+<section class="mt-8 rounded-3xl border border-cyan-600/40 bg-gradient-to-br from-cyan-900/20 to-slate-900/40 p-6 shadow-lg shadow-cyan-900/20">
+  <h2 class="text-xl font-bold bg-gradient-to-r from-cyan-300 to-teal-300 bg-clip-text text-transparent">Similar songs</h2>
+  <div class="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    {% for item in similar %}
+    <article class="rounded-3xl border border-cyan-600/40 bg-gradient-to-br from-cyan-900/20 to-slate-900/50 p-5 hover:shadow-lg hover:shadow-cyan-600/30 transition">
+      <p class="text-xs uppercase tracking-wider font-bold text-amber-400">{{ item.genre }}</p>
+      <h3 class="mt-2 text-lg font-bold bg-gradient-to-r from-cyan-300 to-teal-300 bg-clip-text text-transparent">{{ item.title }}</h3>
+      <p class="mt-1 text-slate-400 text-sm">by <span class="text-teal-300">{{ item.artist }}</span></p>
+      <p class="mt-4 text-sm text-cyan-300 font-semibold">Similarity: <span class="text-cyan-200">{{ (item.similarity_score * 100)|int }}%</span></p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

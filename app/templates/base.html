@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Music API{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.11.1"></script>
+  </head>
+  <body class="bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950 text-slate-100">
+    <div class="min-h-screen">
+      <header class="border-b border-purple-800/50 bg-gradient-to-r from-slate-900/95 via-purple-900/50 to-indigo-900/30 backdrop-blur-sm shadow-lg shadow-purple-900/20">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+          <div>
+            <p class="text-xs uppercase tracking-[0.36em] bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Music Recommendation API</p>
+            <h1 class="mt-2 text-2xl font-semibold tracking-tight bg-gradient-to-r from-cyan-300 via-purple-300 to-rose-300 bg-clip-text text-transparent">Frontend Dashboard</h1>
+          </div>
+          <nav class="flex flex-wrap items-center gap-2 text-sm text-slate-300">
+            <a href="/api/v1/ui" class="rounded-full px-3 py-2 transition hover:bg-purple-700/40 hover:text-cyan-300 hover:shadow-lg hover:shadow-purple-600/20">Dashboard</a>
+            <a href="/api/v1/songs/ui" class="rounded-full px-3 py-2 transition hover:bg-cyan-700/20 hover:text-cyan-300 hover:shadow-lg hover:shadow-cyan-600/20">Songs</a>
+            <a href="/api/v1/genres/ui" class="rounded-full px-3 py-2 transition hover:bg-amber-700/20 hover:text-amber-300 hover:shadow-lg hover:shadow-amber-600/20">Genres</a>
+            <a href="/api/v1/users/1/history/ui" class="rounded-full px-3 py-2 transition hover:bg-rose-700/20 hover:text-rose-300 hover:shadow-lg hover:shadow-rose-600/20">User History</a>
+            <a href="/api/v1/users/1/recommendations/ui" class="rounded-full px-3 py-2 transition hover:bg-violet-700/20 hover:text-violet-300 hover:shadow-lg hover:shadow-violet-600/20">Recommendations</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </body>
+</html>

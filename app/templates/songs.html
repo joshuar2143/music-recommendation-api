@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Songs — Music API{% endblock %}
+
+{% block content %}
+<section class="mb-6 rounded-3xl border border-cyan-600/40 bg-gradient-to-br from-cyan-900/20 to-slate-900/40 p-6 shadow-lg shadow-cyan-900/30">
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div>
+      <p class="text-sm uppercase tracking-[0.32em] text-cyan-400 font-semibold">Song Browser</p>
+      <h1 class="mt-2 text-3xl font-bold bg-gradient-to-r from-cyan-300 to-teal-300 bg-clip-text text-transparent">Songs</h1>
+      <p class="mt-1 text-sm text-slate-300">Page {{ page }} · {{ total }} songs.</p>
+    </div>
+    <form hx-get="/api/v1/songs/ui/fragment" hx-target="#song-table" hx-swap="innerHTML" class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end">
+      <div class="space-y-2">
+        <label class="sr-only" for="search">Search</label>
+        <input id="search" name="search" type="text" value="{{ search }}" placeholder="Search title or artist" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+      </div>
+      <div class="space-y-2">
+        <label class="sr-only" for="genre">Genre</label>
+        <input id="genre" name="genre" type="text" value="{{ genre }}" placeholder="Genre filter" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <label class="sr-only" for="sort_by">Sort by</label>
+        <select id="sort_by" name="sort_by" class="rounded-2xl border border-cyan-600/60 bg-cyan-950/40 px-4 py-3 text-cyan-100 shadow-sm focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50">
+          <option value="id" {% if sort_by == 'id' %}selected{% endif %}>Sort by ID</option>
+          <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Sort by Title</option>
+          <option value="artist" {% if sort_by == 'artist' %}selected{% endif %}>Sort by Artist</option>
+        </select>
+        <label class="sr-only" for="sort_dir">Direction</label>
+        <select id="sort_dir" name="sort_dir" class="rounded-2xl border border-cyan-600/60 bg-cyan-950/40 px-4 py-3 text-cyan-100 shadow-sm focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50">
+          <option value="asc" {% if sort_dir == 'asc' %}selected{% endif %}>Ascending</option>
+          <option value="desc" {% if sort_dir == 'desc' %}selected{% endif %}>Descending</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-3">
+        <input type="hidden" name="page" value="1" />
+        <button type="submit" class="inline-flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:from-cyan-400 hover:to-teal-400 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-400/50">Apply</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div id="song-table">
+  {% include "_songs_table.html" %}
+</div>
+{% endblock %}
